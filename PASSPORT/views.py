@@ -1,3 +1,7 @@
-from django.shortcuts import render
+from django.views import generic
+from .models import EnrolledPupil
 
-# Create your views here.
+
+class PupilsList(generic.TemplateView):
+    model = EnrolledPupil
+    template_name = 'index.html'
