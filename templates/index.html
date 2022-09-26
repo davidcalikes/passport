@@ -1,0 +1,76 @@
+{% block content %}
+
+<header>
+    <div class="container-fluid hero-container ">
+        <div class="row hero-overlay hero-image img-fluid">
+            <div class="col-12 hero-text">
+                <h1>Favoureats</h1>
+                <p>tried and tested favourite recipes</p>
+                <p>choose from a selection and add your own favourites</p>
+                {% if user.is_authenticated %}
+                <p class="invisible"><a href="{% url 'account_signup' %}">Register now!</a></p>
+                {% else %}
+                <p><a href="{% url 'account_signup' %}" class="btn btn-lg btn-success">Register now!</a></p>
+                {% endif %}
+            </div>
+            <div></div>
+        </div>
+    </div>
+</header>
+
+
+<div class="container-fluid">
+    <hr>
+    <div class="row">
+        <div class="col-12">
+            <h2 class="ldg-header">Latest Recipes</h2>
+            <p>To view these recipes and more please <a href="{% url 'account_login' %}"> sign in </a>and go to the <a href="{% url 'recipes' %}">Recipes</a> page. To
+                add your own recipes please go to the <a href="{% url 'myrecipes' %}"> My Recipes</a> page.</p>
+        </div>
+    </div>
+    <div class="row">
+        <!-- Recipe Snapshot Column -->
+        <div class="col-12 mt-3 left">
+            <div class="row">
+                {% for recipe in recipe_list %}
+                <div class="col-lg-4">
+                    <div class="card mb-4">
+                        <div class="card-body">
+                            <div class="image-container">
+                                {% if 'placeholder' in recipe.recipe_image.url %}
+                                <img class="card-img-top"
+                                    src="https://res.cloudinary.com/ddaqqsr3r/image/upload/v1634930037/Food/rsz_1cook-gb536340c8_1920_rtayn0.jpg"
+                                    alt="Image of open recipe book">
+                                {% else %}
+                                <img class="card-img-top" src=" {{ recipe.recipe_image.url }} "
+                                    alt="{{ recipe.title }}">
+                                {% endif %}
+                                <div class="card-img-overlay">
+                                    <p class="recipe-type"> {{ recipe.type }} / {{ recipe.category}}</p>
+                                </div>
+                                <div>
+                                    <h3 class="recipe-title home-cd"> {{ recipe.title }}</h3>
+                                    <p class="recipe-footer card-footer">added by {{ recipe.author }} on
+                                        {{ recipe.created_on}}</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {% if forloop.counter|divisibleby:3 %}
+                <!-- </div> -->
+                <div class="row">
+                    {% endif %}
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col text-center">
+                <a class="btn btn-lg btn-success" href="{% url 'recipes' %}">View the Recipes</a>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

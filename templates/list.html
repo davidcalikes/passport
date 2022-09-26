@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+{% load static %}
+{% block content %}
+<html>
+    <head>
+        <title>
+            Pupils
+        </title>
+    </head>
+    <body>
+        <div class = "pupil-list" >
+            {% for pupil in pupil_list %}
+            <div class="pupil">
+                <h2><a href="#">{{ pupil.pupil_last_name }}</a></h2>
+                <p>{{ pupil.pupil_first_name }}</p>
+                <p>{{ pupil.school_name }}</p>
+            </div>
+            {% endfor %}
+        </div>
+    </body>
+</html>
+{% endblock %}
